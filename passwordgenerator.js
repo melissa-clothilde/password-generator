@@ -5,9 +5,8 @@ var clipboardBtn = document.getElementById('clipboard');
 
 // emtpy array to hold getRandom function variables once pushed within getTemplate function
 var recipe = [];
-console.log('recipe', recipe),
 
-// Generate a Password Button. When clicked, start getTemplate function to alert user for the template
+// Generate a Password Button. When clicked, invoke getTemplate function to alert user for the template
 generateBtn.addEventListener('click', getTemplate);
 
 //Copy to clipboard button
@@ -37,7 +36,7 @@ function getRandomUpper() {
 //End of functions to generate different characters
 
 // Object/Array of all the getRandom functions above
-const randomFunc = {
+var randomFunc = {
     symbol: getRandomSymbol,
     numeric: getRandomNumber,
     lower: getRandomLower,
@@ -52,7 +51,7 @@ function getTemplate() {
     //prompt user for password length
     var passwordLength = prompt("How long would you like your password to be? Try to create a password that is at least 8 characters and no more than 128 characters.");
 
-    if (passwordLength === null) {
+    if (passwordLength < 8 || passwordLength > 128 || isNaN(passwordLength)) {
         alert('No secure password for you!') //working??
         return // We return a null object of the template if the user cancels or fills it out incorrectly
     }
@@ -114,23 +113,26 @@ function getTemplate() {
 // Pass in variable oject of all the getRandom functions
 function generatePassword(template) {
 
-    var generatedPassword = ''; //1. Initialize varaible. password is empty before we make changes to it.//
+    var generatedPassword = ''; //Initialize varaible. Password is empty before we make changes to it.//
 
     if (!template) {
         return '';
     }
 
-    //3. create for loop with password length condition
+    //option: make sure first x amount of characters are one of each based on what was selected by user
+
+    //create for loop with password length condition
 
     for (let i = 0; i < template.length; i++) {
         var randomType = Math.floor(Math.random() * recipe.length);
         
         //add characters to generated password
         generatedPassword += randomFunc[recipe[randomType]]();
-        console.log(randomFunc[recipe[randomType]]());
     }
 
-    const finalPassword = generatedPassword;
+    //while not loop? does my generate password have at least one type
+
+    var finalPassword = generatedPassword;
 
     return finalPassword //we are returning final password from our generated function. finalPassword will get put into the resultEl.innerText//
 }
