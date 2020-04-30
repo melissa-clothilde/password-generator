@@ -16,7 +16,7 @@ function copyToClipboard() {
     var passwordText = document.querySelector('#result');
     passwordText.select();
     document.execCommand('copy');
-    alert('Password copied to clipboard! ' + passwordText.value + ' ');
+    alert('Password copied to clipboard! ' + '\n' + passwordText.value);
 }
 
 // Functions to generate different characters
@@ -119,7 +119,11 @@ function generatePassword(template) {
         return '';
     }
 
-    //option: make sure first x amount of characters are one of each based on what was selected by user
+    //make sure first two characters are one of each based on what was selected by user 
+    else {
+        generatePassword += randomFunc[recipe];
+        generatePassword += randomFunc[recipe];
+    }
 
     //create for loop with password length condition
 
@@ -129,8 +133,6 @@ function generatePassword(template) {
         //add characters to generated password
         generatedPassword += randomFunc[recipe[randomType]]();
     }
-
-    //while not loop? does my generate password have at least one type
 
     var finalPassword = generatedPassword;
 
